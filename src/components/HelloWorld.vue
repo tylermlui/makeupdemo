@@ -1,58 +1,152 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <div class="search">
+      <h2>{{ msg }}</h2> 
+      <input type="text" placeholder="Search">
+      <a href="https://www.google.com/" target ="_blank">Login/Register </a>
+    </div>
+    <br>
+    <div class="match">
+      Find your match
+    </div>
+    <br>
+    <hr>
+    <button @click="submitEyes" class="button">Eye Products</button>
+    <button @click="submitLips" class="button">Lip Products</button>
+    <button @click="submitFace" class="button">Face Products</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+  // Your component options
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data() {
+    return {
+      inputData: '' ,// Data property to store input field value
+      responseData :[]
+    };
+  },
+  methods: {
+    submitLips() {
+      const data_list = ["lipstick","lipliner"]
+      axios.post('http://localhost:8000/submit_data_view/', {
+        data: data_list
+      })
+      .then(response => {
+        console.log('Response:', response.data);
+        // Handle response if needed
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle error if needed
+      });
+    },
+    submitFace(){
+        const data_list = ["bronzer","blush","foundation"]
+        axios.post('http://localhost:8000/submit_data_view/', {
+        data: data_list
+      })
+      .then(response => {
+        console.log('Response:', response.data);
+        // Handle response if needed
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle error if needed
+      })
+    },
+    submitEyes(){
+        const data_list = ["eyeliner","eyebrow","eyeshadow"]
+        axios.post('http://localhost:8000/submit_data_view/', {
+        data: data_list
+      })
+      .then(response => {
+        console.log('Response:', response.data);
+        // Handle response if needed
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle error if needed
+      })
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.hello {
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
 h3 {
   margin: 40px 0 0;
 }
+.button {
+  background-color: white;
+  border: solid black 1px;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background-color 0.3s;
+}
+
+.search {
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+.search h2 {
+  margin-right: 10%; /* Adjust the margin between h1 and input */
+}
+
+.match {
+  display: flex;
+  justify-content: center;
+}
+
+input[type="text"] {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1; /* Make the input element grow to fill remaining space */
+  outline: none;
+  border: 1px solid rgb(70, 69, 69);
+  background-color: rgb(242, 240, 240);
+  padding: 5px 8px; /* Adjust padding */
+  border-radius: 15px; /* Make the input rounded */
+}
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
+
+.search a {
+  color: black;
+  margin-right: 5%;
+  margin-left: 10%;
+  text-decoration: none;
 }
+
+a {
+  color: #000000;
+}
+
 </style>
